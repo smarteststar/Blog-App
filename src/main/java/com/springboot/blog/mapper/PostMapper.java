@@ -2,6 +2,7 @@ package com.springboot.blog.mapper;
 
 import com.springboot.blog.entity.Post;
 import com.springboot.blog.payload.PostDto;
+import com.springboot.blog.payload.PostResponse;
 import org.mapstruct.Mapper;
 
 
@@ -18,4 +19,5 @@ public interface PostMapper {
     Post dtoToPost(PostDto postDto);
 
     List<PostDto> toPostDTOs(List<Post> posts);
+
 }
