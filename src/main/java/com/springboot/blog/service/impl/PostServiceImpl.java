@@ -1,9 +1,16 @@
 package com.springboot.blog.service.impl;
 
 import com.springboot.blog.entity.Post;
+import com.springboot.blog.mapper.PostMapper;
+import com.springboot.blog.payload.PostDto;
+import com.springboot.blog.payload.PostResponse;
 import com.springboot.blog.repository.PostRepository;
 import com.springboot.blog.service.PostService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,8 +22,26 @@ public class PostServiceImpl implements PostService {
 
     private final PostRepository postRepository;
 
-    public List<Post> findAllPosts() {
-        return postRepository.findAll();
+    private final PostMapper postMapper;
+
+    public PostResponse findAllPosts(int pageNo, int pageSize,String sortBy,String sortDir) {
+        //sorting Based Upon Asc and Desc
+        Sort sort=sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
+       // create pagable instance
+        Pageable pageable = PageRequest.of(pageNo, pageSize, sort);
+
+        Page<Post> posts=postRepository.findAll(pageable);
+        // get content of page object
+        List<Post> postList=posts.getContent();
+
+        PostResponse postResponse = new PostResponse();
+        postResponse.setContent(postMapper.toPostDTOs(postList));
+        postResponse.setPageNo(posts.getNumber());
+        postResponse.setPageSize(posts.getSize());
+        postResponse.setTotalElements(posts.getTotalElements());
+        postResponse.setTotalPages(posts.getTotalPages());
+        postResponse.setLast(posts.isLast());
+        return postResponse;
     }
 
     public Optional<Post> findPostById(Long id) {
