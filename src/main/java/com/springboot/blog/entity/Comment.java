@@ -18,7 +18,7 @@ public class Comment {
     private String name;
     private String email;
     private String body;
-
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id" ,nullable = false)
     private Post post;
