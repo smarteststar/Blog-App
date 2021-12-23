@@ -9,4 +9,4 @@
                              ███ ░███
                             ░░██████
                                  ( ${spring-boot.version})
-${BLOG SPRING BOOT RESTFUL APPLICATION} ${ Version 1.0}
+${spring.application.name}  [Version 1.0]
