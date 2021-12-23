@@ -1,6 +1,7 @@
 package com.springboot.blog.service.impl;
 
 import com.springboot.blog.entity.Post;
+import com.springboot.blog.exception.ResourceNotFoundException;
 import com.springboot.blog.mapper.PostMapper;
 import com.springboot.blog.payload.PostDto;
 import com.springboot.blog.payload.PostResponse;
@@ -14,7 +15,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -27,7 +27,7 @@ public class PostServiceImpl implements PostService {
     public PostResponse findAllPosts(int pageNo, int pageSize,String sortBy,String sortDir) {
         //sorting Based Upon Asc and Desc
         Sort sort=sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
-       // create pagable instance
+       // create pageable instance
         Pageable pageable = PageRequest.of(pageNo, pageSize, sort);
 
         Page<Post> posts=postRepository.findAll(pageable);
@@ -44,12 +44,15 @@ public class PostServiceImpl implements PostService {
         return postResponse;
     }
 
-    public Optional<Post> findPostById(Long id) {
-        return postRepository.findById(id);
+    public PostDto findPostById(Long id) {
+
+        return postMapper.postToDto(postRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Post", "id", id)));
     }
 
-    public Post createPost(Post post) {
-        return postRepository.save(post);
+    public PostDto createPost(PostDto postDto) {
+        Post post=postMapper.dtoToPost(postDto);
+        return  postMapper.postToDto(postRepository.save(post));
     }
 
     public void deletePostById(Long id) {
