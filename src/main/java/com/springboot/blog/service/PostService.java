@@ -1,10 +1,7 @@
 package com.springboot.blog.service;
 
-import com.springboot.blog.entity.Post;
 import com.springboot.blog.payload.PostDto;
 import com.springboot.blog.payload.PostResponse;
-
-import java.util.Optional;
 
 public interface PostService {
 
@@ -15,4 +12,6 @@ public interface PostService {
     PostDto findPostById(Long id);
 
     void deletePostById(Long id);
+
+    PostDto updatePost(PostDto postDto, long id);
 }

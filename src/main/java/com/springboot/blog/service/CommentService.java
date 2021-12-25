@@ -10,8 +10,9 @@ public interface CommentService {
 
     List<CommentDto> findCommentsByPostId(long postId);
 
-    CommentDto findByCommentId(long postId,long commentId);
+    CommentDto findByCommentId(long postId,long commentId) ;
 
     void deletePostById(long postId ,Long commentId);
 
+    CommentDto updateComment(Long postId, long commentId, CommentDto commentRequest);
 }

@@ -37,9 +37,12 @@ public class PostController {
     }
 
    @GetMapping("/{id}")
-   public ResponseEntity<PostDto> findPostById(@PathVariable Long id) {
+   public ResponseEntity<?> findPostById(@PathVariable Long id) {
        Optional<PostDto> postDto= Optional.ofNullable(postService.findPostById(id));
-       return ResponseEntity.ok(postDto.orElse(null));
+    if (postDto.isPresent()) {
+      return ResponseEntity.ok(postDto);
+       }
+       return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
     @PutMapping("/{id}")
