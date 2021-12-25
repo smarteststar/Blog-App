@@ -6,3 +6,4 @@ spring boot Blog App
 4. Added OneToMany,ManyToOne Mapping Between Post and Comment
 5. Added MapStruct for Conversion Between DTo's and Entites
 6. Validating Respone using Custom Validations in two ways .
+7. Added Global and Customized Exceptions
