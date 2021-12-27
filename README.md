@@ -8,3 +8,6 @@ spring boot Blog App
 6. Validating Respone using Custom Validations in two ways 
 7. Added Global and Customized Exceptions
 8. Added Spring securty Authentication for Signin and signUp
+9. Added ManytoMany for User and Role in uni directional way
+10. Jwt tokens implementation
+11. MapStruct Implementation for conversion of DTO to entities
